@@ -46,4 +46,9 @@ class Article {
     int id;
     String title;
     String body;
+
+    @Override  // 암묵적으로 붙여줌
+    public String toString() {
+        return String.format("{id : %d, title : \"%s\", body : \"%s\"}", id, title, body);
+    }
 }
