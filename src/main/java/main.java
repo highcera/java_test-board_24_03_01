@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) {
+        int articleLastId = 0;
+
         System.out.println("== 자바 텍스트 게시판 0.1v ==");
         System.out.println("== 자바 텍스트 게시판 시작 ==");
 
@@ -19,7 +21,7 @@ public class main {
                 System.out.printf("내용 : ");
                 String body = sc.nextLine();
 
-                int id = 1;
+                int id = ++articleLastId;
                 System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
 
             } else if(cmd.equals("exit")) {
