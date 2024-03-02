@@ -1,9 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
+    static void makeTestData(List<Article> articles) {
+        articles.add(new Article(1, "제목1", "내용1"));
+        articles.add(new Article(2, "제목2", "내용2"));
+        articles.add(new Article(3, "제목3", "내용3"));
+    }
     public static void main(String[] args) {
         int articleLastId = 0;
         Article lastArticle = null;
+//        ArrayList<Article> articles = new ArrayList<Article>();
+        List<Article> articles = new ArrayList<>();
+
+        makeTestData(articles);
 
         System.out.println("== 자바 텍스트 게시판 0.1v ==");
         System.out.println("== 자바 텍스트 게시판 시작 ==");
@@ -29,6 +40,15 @@ public class main {
 
                 System.out.println("생성된 게시물 객체 : " + article);
                 System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
+            } else if (cmd.equals("/usr/article/list")){
+                System.out.println("== 게시물 리스트 ==");
+                System.out.println("=================");
+                System.out.println("번호   /   제목");
+                System.out.println("=================");
+
+                for(Article article : articles) {
+                    System.out.printf("%d / %s\n", article.id, article.title);
+                }
 
             } else if (cmd.equals("/usr/article/detail")){
                 if(lastArticle == null) {
