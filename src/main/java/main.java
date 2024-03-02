@@ -16,6 +16,9 @@ public class main {
         List<Article> articles = new ArrayList<>();
 
         makeTestData(articles);
+        if(articles.size() > 0) {
+            articleLastId = articles.get(articles.size() - 1).id;
+        }
 
         System.out.println("== 자바 텍스트 게시판 0.1v ==");
         System.out.println("== 자바 텍스트 게시판 시작 ==");
@@ -39,7 +42,6 @@ public class main {
                 Article article = new Article(id, title, body);
                 lastArticle = article;
 
-                System.out.println("생성된 게시물 객체 : " + article);
                 System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
             } else if (cmd.equals("/usr/article/list")){
                 System.out.println("== 게시물 리스트 ==");
