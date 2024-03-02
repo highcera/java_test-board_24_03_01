@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,19 +10,18 @@ public class main {
     }
     public static void main(String[] args) {
         int articleLastId = 0;
-        Article lastArticle = null;
 //        ArrayList<Article> articles = new ArrayList<Article>();
         List<Article> articles = new ArrayList<>();
-
-        makeTestData(articles);
-        if(articles.size() > 0) {
-            articleLastId = articles.get(articles.size() - 1).id;
-        }
 
         System.out.println("== 자바 텍스트 게시판 0.1v ==");
         System.out.println("== 자바 텍스트 게시판 시작 ==");
 
         Scanner sc = new Scanner(System.in);
+
+        makeTestData(articles);
+        if(articles.size() > 0) {
+            articleLastId = articles.get(articles.size() - 1).id;
+        }
 
         while (true) {
             System.out.printf("명령)");
@@ -40,7 +38,7 @@ public class main {
                 int id = ++articleLastId;
 
                 Article article = new Article(id, title, body);
-                lastArticle = article;
+                articles.add(article);
 
                 System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
             } else if (cmd.equals("/usr/article/list")){
@@ -58,12 +56,12 @@ public class main {
 //                    System.out.printf("%d / %s\n", article.id, article.title);
 //                }
             } else if (cmd.equals("/usr/article/detail")){
-                if(lastArticle == null) {
+                Article article = articles.get(articles.size() - 1);
+
+                if(articles.isEmpty()) {
                     System.out.println("게시물이 존재하지 않습니다.");
                     continue;
                 }
-
-                Article article = lastArticle;
 
                 System.out.println("== 게시물 상세내용 ==");
                 System.out.printf("번호 : %d\n", article.id);
