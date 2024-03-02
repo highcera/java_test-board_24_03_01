@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,10 +47,14 @@ public class main {
                 System.out.println("번호   /   제목");
                 System.out.println("=================");
 
-                for(Article article : articles) {
+                // for문을 이용한 역순 출력
+                for(int i = articles.size()-1; i >= 0; i--) {
+                    Article article = articles.get(i);
                     System.out.printf("%d / %s\n", article.id, article.title);
                 }
-
+//                for(Article article : articles) {
+//                    System.out.printf("%d / %s\n", article.id, article.title);
+//                }
             } else if (cmd.equals("/usr/article/detail")){
                 if(lastArticle == null) {
                     System.out.println("게시물이 존재하지 않습니다.");
