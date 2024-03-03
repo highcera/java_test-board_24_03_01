@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class main {
     static void makeTestData(List<Article> articles) {
@@ -27,7 +25,9 @@ public class main {
             System.out.printf("명령)");
             String cmd = sc.nextLine();
 
-            if (cmd.equals("/usr/article/write")) {
+            Rq rq = new Rq(cmd);
+
+            if (rq.getUrlPath().equals("/usr/article/write")) {
                 System.out.println("== 게시물 작성 ==");
                 System.out.printf("제목 : ");
                 String title = sc.nextLine();
@@ -41,7 +41,7 @@ public class main {
                 articles.add(article);
 
                 System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
-            } else if (cmd.equals("/usr/article/list")){
+            } else if (rq.getUrlPath().equals("/usr/article/list")){
                 System.out.println("== 게시물 리스트 ==");
                 System.out.println("=================");
                 System.out.println("번호   /   제목");
@@ -55,7 +55,7 @@ public class main {
 //                for(Article article : articles) {
 //                    System.out.printf("%d / %s\n", article.id, article.title);
 //                }
-            } else if (cmd.equals("/usr/article/detail")){
+            } else if (rq.getUrlPath().equals("/usr/article/detail")){
                 Article article = articles.get(articles.size() - 1);
 
                 if(articles.isEmpty()) {
@@ -67,7 +67,7 @@ public class main {
                 System.out.printf("번호 : %d\n", article.id);
                 System.out.printf("제목 : %s\n", article.title);
                 System.out.printf("내용 : %s\n", article.body);
-            } else if(cmd.equals("exit")) {
+            } else if(rq.getUrlPath().equals("exit")) {
                 System.out.printf("입력받은 명령어 : %s\n", cmd);
                 break;
             }
@@ -92,5 +92,54 @@ class Article {
     @Override  // 암묵적으로 붙여줌
     public String toString() {
         return String.format("{id : %d, title : \"%s\", body : \"%s\"}", id, title, body);
+    }
+}
+
+class Rq {
+    String url;
+    Map params;
+    String urlPath;
+
+    Rq(String url) {
+        this.url = url;
+        params = Util.getParamsFromUrl(url);
+        urlPath = Util.getUrlPathFromUrl(url);
+    }
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+}
+
+class Util {
+    static Map<String, String> getParamsFromUrl(String url) {
+        Map<String, String> params = new HashMap<>();
+        String[] urlBits = url.split("\\?", 2);
+
+        if (urlBits.length == 1) {
+            return params;
+        }
+
+        String queryString = urlBits[1];
+
+        for(String bit : queryString.split("&")) {
+            String[] bits = bit.split("=", 2);
+
+            if (bits.length == 1) {
+                continue;
+            }
+
+            params.put(bits[0], bits[1]);
+        }
+
+        return params;
+    }
+
+    static String getUrlPathFromUrl(String url) {
+        return url.split("\\?", 2)[0];
     }
 }
